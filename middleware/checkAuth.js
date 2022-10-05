@@ -16,12 +16,12 @@ const checkAuth = async (req, res, next) => { //384 contenido en 385
             
             return next();  // una vez que verificamos el jwt y lo asignamos al request nos iremos al siguiente Middleware
         } catch (error) {
-            return res.status(404).json({msg: 'Hubo un error'})
+            return res.status(404).json({msg: 'Error'})
         }
     }
 
     if(!token) {
-        const error = new Error('Token no válido')
+        const error = new Error('Invalid token')
         return res.status(401).json({msg: error.message})
     }
 

@@ -7,12 +7,12 @@ const agregarTarea = async(req,res) => { //395
     const existeProyecto = await Proyecto.findById(proyecto);
 
     if(!existeProyecto) {
-        const error = new Error("El proyecto no Existe");
+        const error = new Error("The project does not exist");
         return res.status(404).json({msg: error.message});
     }
 
     if(existeProyecto.creador.toString() !== req.usuario._id.toString()) {
-        const error = new Error("El tienes los permisos para añdir tareas");
+        const error = new Error("You don't have the permissions to add tasks");
         return res.status(403).json({msg: error.message});
     }
 
@@ -33,12 +33,12 @@ const obtenerTarea = async(req,res) => { //396
     const tarea = await Tarea.findById(id).populate("proyecto");
 
     if(!tarea) {
-        const error = new Error("Tarea no encontrada");
+        const error = new Error("Task not found");
         return res.status(404).json({msg: error.message});  
     }
 
     if(tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
-        const error = new Error("Acción no válida");
+        const error = new Error("Invalid action");
         return res.status(403).json({msg: error.message});     
     }
 
@@ -51,12 +51,12 @@ const actualizarTarea = async(req,res) => { //397
     const tarea = await Tarea.findById(id).populate("proyecto");
 
     if(!tarea) {
-        const error = new Error("Tarea no encontrada");
+        const error = new Error("Task not found");
         return res.status(404).json({msg: error.message});
     }
 
     if(tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
-        const error = new Error("Acción no válida");
+        const error = new Error("Invalid action");
         return res.status(403).json({msg: error.message});    
     }
 
@@ -81,12 +81,12 @@ const eliminarTarea = async(req,res) => { //398
     const tarea = await Tarea.findById(id).populate("proyecto");
 
     if(!tarea) {
-        const error = new Error("Tarea no encontrada");
+        const error = new Error("Task not found");
         return res.status(404).json({msg: error.message});
     }
 
     if(tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
-        const error = new Error("Acción no válida");
+        const error = new Error("Invalid action");
         return res.status(403).json({msg: error.message});  
     }
 
@@ -94,7 +94,7 @@ const eliminarTarea = async(req,res) => { //398
         const proyecto = await Proyecto.findById(tarea.proyecto); //482
         proyecto.tareas.pull(tarea._id);
         await Promise.allSettled([await proyecto.save(), await tarea.deleteOne()]); //482
-        res.json({msg: "La Tarea se eliminó"});
+        res.json({msg: "Deleted task"});
     } catch (error) {
         console.log(error);
     }
@@ -106,14 +106,14 @@ const cambiarEstado = async(req,res) => { //481
     const tarea = await Tarea.findById(id).populate("proyecto");
 
     if(!tarea) {
-        const error = new Error("Tarea no encontrada");
+        const error = new Error("Task not found");
         return res.status(404).json({msg: error.message});
     }
 
     if(tarea.proyecto.creador.toString() !== req.usuario._id.toString() && !tarea.proyecto.colaboradores.some(
         (colaborador) => colaborador._id.toString() === req.usuario._id.toString())
         ) {
-        const error = new Error("Acción no válida");
+        const error = new Error("Invalid action");
         return res.status(403).json({msg: error.message});    
     }
 

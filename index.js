@@ -1,6 +1,6 @@
 //361 este archivo tendrá la config de mi servidor
 import express from "express"; //362 para esto (mod package.json despues de description)
-//const express =  require("express"); Se comenta porque es el CommonJS y es incomodo 632 por eso utilizamos el ESM arriba
+//const express =  require("express"); Se comenta porque es el CommonJS y es incomodo 3692 por eso utilizamos el ESM arriba
 import dotenv from "dotenv"; //365
 import cors from "cors"; //415 permite la implementacion del cors para permitir las conexiones desde el dominio del frontend  
 import conectarDB from "./config/db.js"; //364
@@ -24,7 +24,7 @@ const corsOptions = { //segun la documentacion de cors
             callback(null, true);
         } else {
             //no esta permitido
-            callback( new Error("Error de Cors"));
+            callback( new Error("Cors Erros"));
         }
     },
 };
@@ -38,7 +38,7 @@ app.use("/api/tareas", tareaRoutes); //394
 const PORT = process.env.PORT || 4000//365 esta variable de entorno se creará en el servidor de produccion automaticamente
 
 const servidor = app.listen(PORT, () => { //489 const server 
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
+    console.log(`Server running on the port ${PORT}`);
 });
 
 // Socket.io 489

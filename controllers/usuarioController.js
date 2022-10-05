@@ -10,7 +10,7 @@ const registrar = async (req, res) => { //370 creamos este Controller
     const existeUsuario = await Usuario.findOne({email});
 
     if(existeUsuario) {
-        const error = new Error("Usuario ya registrado");
+        const error = new Error("This User is already registered");
         return res.status(400).json({msg: error.message})
     }
 
@@ -27,7 +27,7 @@ const registrar = async (req, res) => { //370 creamos este Controller
             token: usuario.token
         })
 
-        res.json({msg: 'Usuario Creado Correctamente, Revisa tu email para consultar tu cuenta'}); //415
+        res.json({msg: 'User created successfully, check your email to consult your account'}); //415
     } catch (error) {
         console.log(error);
     }
@@ -39,13 +39,13 @@ const autenticar = async (req, res) => { //375 contendido en 376
     //comprobar si el usuario existe
     const usuario = await Usuario.findOne({email});
     if(!usuario) {
-        const error = new Error("El Usuario no existe");
+        const error = new Error("The user does not exist");
         return res.status(404).json({msg: error.message })
     }
 
     //Comprobar si el usuario está confirmado
     if(!usuario.confirmado) {
-        const error = new Error("Tu cuenta no ha sido confirmada")
+        const error = new Error("Your account has not been confirmed")
         return res.status(403).json({msg: error.message})
     }
     
@@ -58,7 +58,7 @@ const autenticar = async (req, res) => { //375 contendido en 376
             token: generarJWT(usuario._id),//378
         });
     } else {
-        const error = new Error("El password es incorrecto")
+        const error = new Error("The password is wrong")
         return res.status(403).json({msg: error.message})
     }
 };
@@ -69,7 +69,7 @@ const confirmar = async (req, res) => { //379 contenido en 380
     const usuarioConfirmar =  await Usuario.findOne({token});
     
     if(!usuarioConfirmar) {
-        const error = new Error("Token no válido");
+        const error = new Error("Invalid Token");
         return res.status(403).json({msg : error.message})    
     }
 
@@ -77,7 +77,7 @@ const confirmar = async (req, res) => { //379 contenido en 380
         usuarioConfirmar.confirmado = true;
         usuarioConfirmar.token = "";
         await usuarioConfirmar.save();
-        res.json({msg: 'Usuario Confirmado Correctamente'})
+        res.json({msg: 'User confirmed successfully'})
     } catch (error) {
         console.log(error);
     }
@@ -88,7 +88,7 @@ const olvidePassword = async (req, res) => { //381
 
     const usuario = await Usuario.findOne({email});
     if(!usuario) {
-        const error = new Error("El usuario no existe")
+        const error = new Error("The user does not exist")
         return res.status(404).json({msg: error.message});
     }
 
@@ -103,7 +103,7 @@ const olvidePassword = async (req, res) => { //381
             token: usuario.token
         })
 
-        res.json({msg: "Hemos enviado un email con las instrucciones"})
+        res.json({msg: "We have sent an email with the instructions"})
     } catch (error) {
         console.log(error);
     }
@@ -114,9 +114,9 @@ const comprobarToken = async (req, res) => { //382
 
     const tokenValido = await Usuario.findOne({token});
     if(tokenValido) {
-        res.json({msg: 'Token válido y el Usuario existe'})
+        res.json({msg: 'Valid token and user exists'})
     } else {
-        const error = new Error("Token no válido")
+        const error = new Error("Invalid Token")
         return res.status(404).json({msg: error.message});
     }
 }
@@ -132,13 +132,13 @@ const nuevoPassword = async (req, res) => { //383
         usuario.token = "";
         try {
             await usuario.save();
-            res.json({msg: "Password Modificado Correctamente"})
+            res.json({msg: "Password modified successfully"})
         } catch (error) {
             console.log(error);
         }
 
     } else {
-        const error = new Error("Token no válido")
+        const error = new Error("Invalid Token")
         return res.status(404).json({msg: error.message});
     } 
 }

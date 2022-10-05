@@ -15,14 +15,14 @@ export const emailRegistro   = async (datos) => { //417 contenido en 418
 
   //Informacion del email 418
   const info = await transport.sendMail({
-      from: '"UpTask - Administrador de Proyectos" <cuentas@uptask.com>',
+      from: '"UpTask - Project Manager" <accounts@uptask.com>',
       to: email,
-      subject: "UpTask - Comprueba tu cuenta",
-      text: "Comprueba tu cuenta en UpTask",
-      html: `<p>Hola: ${nombre}, comprueba tu cuenta en UpTask</p>
-      <p>Tu cuenta ya está casi lista, solo debes comprobarla en el siguiente enlace: <a href="${process.env.FRONTEND_URL}/confirmar/${token}">Comprobar Cuenta</a> </p>
+      subject: "UpTask - Verify your account",
+      text: "Verify your account on UpTask",
+      html: `<p>Hello: ${nombre}, please Verify your account on UpTask</p>
+      <p>Your account is almost ready, you must check the following link: <a href="${process.env.FRONTEND_URL}/confirmar/${token}">Verify account</a> </p>
 
-      <p>Si tu creaste esta cuenta, puedes ignorar el mensaje</p>
+      <p>If you did not create this account, you can ignore this message</p>
       `,
 
   });
@@ -42,16 +42,16 @@ export const emailOlvidePassword= async (datos) => { //421
 
   //Informacion del email 418
   const info = await transport.sendMail({
-      from: '"UpTask - Administrador de Proyectos" <cuentas@uptask.com>',
+      from: '"UpTask - Project Manager" <accounts@uptask.com>',
       to: email,
-      subject: "UpTask - Reestablece tu Password",
-      text: "Reestablece tu Password",
-      html: `<p>Hola: ${nombre}, has solicitado reestablecer tu password</p>
-      <p>Sigue el siguiente enlace para generar un nuevo Password:
+      subject: "UpTask - Reset your password",
+      text: "Reset your password",
+      html: `<p>Hello: ${nombre}, you have requested to reset your password</p>
+      <p>Follow the link to generate a new Password:
       
-      <a href="${process.env.FRONTEND_URL}/olvide-password/${token}">Reestablecer Password</a> </p>
+      <a href="${process.env.FRONTEND_URL}/olvide-password/${token}">Reset Password</a> </p>
 
-      <p>Si tu no solicitaste este Email, puedes ignorar el mensaje</p>
+      <p>If you did not request this Email, you can ignore this message</p>
       `,
 
   });
